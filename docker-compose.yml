@@ -1,0 +1,22 @@
+services:
+  productos:
+    build: ./productos
+    container_name: productos
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./productos:/app
+    env_file:
+      - ./productos/.env
+
+  # otros servicios van aquí...
+
+  api_gateway:
+    image: nginx:latest
+    container_name: api_gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - productos
